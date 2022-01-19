@@ -4,13 +4,11 @@
 
 struct Entity
 {
-	Entity(float t_posX, float t_posY,sf::Color t_color){
+	Entity(float t_posX, float t_posY,sf::Texture& t_texture){
 		body.setPosition(t_posX, t_posY);
-		body.setFillColor(t_color);
-		body.setRadius(10);
-		body.setOutlineThickness(2.0);
-		body.setOutlineColor(sf::Color::Black);
+		body.setTexture(t_texture);
+		body.setOrigin(10.0, 10.0);
 	}
-	sf::CircleShape body;
+	sf::Sprite body;
 };
 #endif

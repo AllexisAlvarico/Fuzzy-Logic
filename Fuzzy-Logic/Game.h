@@ -5,6 +5,7 @@
 #include <iostream>
 #include "Fuzzy.h"
 #include "Entity.h"
+#include "Global.h"
 
 class Game
 {
@@ -31,7 +32,8 @@ private:
 
 	std::vector<Entity> m_enemySlots;
 	std::vector<Entity> m_friendlySlots;
-	sf::CircleShape m_enemy;
+	sf::Texture m_enemyTexture;
+	sf::Texture m_friendlyTexture;
 
 };
 

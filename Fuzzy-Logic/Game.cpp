@@ -1,11 +1,19 @@
 #include "Game.h"
 
-Game::Game() : m_window(sf::VideoMode(800u, 600u), "Fuzzy Logic") 
+Game::Game() : m_window(sf::VideoMode(m_width,m_height), "Fuzzy Logic") 
 {
-
+	if (!m_enemyTexture.loadFromFile("assets/enemySoldier.png"))
+	{
+		//error
+		std::cout << "Cannot find enemy texture" << std::endl;
+	}	
+	if (!m_friendlyTexture.loadFromFile("assets/friendlySoldier.png"))
+	{
+		//error
+		std::cout << "Cannot find friendly texture" << std::endl;
+	}
 	m_exitGame = false;
 	setupGame();
-
 }
 
 void Game::run()
@@ -49,7 +57,17 @@ void Game::processEvents()
 
 void Game::update(sf::Time t_deltaTime)
 {
+	for (size_t i = 0; i < m_troops; i++)
+	{
+		if (m_enemySlots[i].body.getPosition().x <= m_width / 2 + m_range)
+			m_enemySlots[i].body.move(1,0);
+	}
 
+	for (size_t i = 0; i < m_deploy; i++)
+	{
+		if(m_friendlySlots[i].body.getPosition().x >= 650)
+			m_friendlySlots[i].body.move(-1,0);
+	}
 }
 
 void Game::render()
@@ -94,12 +112,12 @@ void Game::setupGame()
 
 	for (size_t i = 0; i < m_troops; i++)
 	{
-		m_enemySlots.push_back(Entity(0, rand() % 600, sf::Color::Red)); // creates the circle and stored into the vector
+		m_enemySlots.push_back(Entity(0, rand() % 550,m_enemyTexture)); // creates the circle and stored into the vector
 	}
 
 	for (size_t i = 0; i < m_deploy; i++)
 	{
-		m_friendlySlots.push_back(Entity(750, rand() % 600, sf::Color::Green));
+		m_friendlySlots.push_back(Entity(750, rand() % 550, m_friendlyTexture));
 	}
 
 }
