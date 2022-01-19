@@ -35,6 +35,9 @@ private:
 	sf::Texture m_enemyTexture;
 	sf::Texture m_friendlyTexture;
 
+	sf::Sprite m_mapSprite;
+	sf::Texture m_mapTexture;
+
 };
 
 #endif // !GAME

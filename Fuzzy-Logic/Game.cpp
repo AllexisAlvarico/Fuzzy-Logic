@@ -12,6 +12,14 @@ Game::Game() : m_window(sf::VideoMode(m_width,m_height), "Fuzzy Logic")
 		//error
 		std::cout << "Cannot find friendly texture" << std::endl;
 	}
+	if (!m_mapTexture.loadFromFile("assets/map.png"))
+	{
+		//error
+		std::cout << "Cannot find map texture" << std::endl;
+	}
+
+	m_mapSprite.setTexture(m_mapTexture);
+
 	m_exitGame = false;
 	setupGame();
 }
@@ -73,6 +81,7 @@ void Game::update(sf::Time t_deltaTime)
 void Game::render()
 {
 	m_window.clear(sf::Color::Black);
+	m_window.draw(m_mapSprite);
 	for (int i = 0; i < m_enemySlots.size(); i++)
 	{
 		m_window.draw(m_enemySlots[i].body);
@@ -112,12 +121,12 @@ void Game::setupGame()
 
 	for (size_t i = 0; i < m_troops; i++)
 	{
-		m_enemySlots.push_back(Entity(0, rand() % 550,m_enemyTexture)); // creates the circle and stored into the vector
+		m_enemySlots.push_back(Entity(0 - rand() % 100, rand() % 550,m_enemyTexture));
 	}
 
 	for (size_t i = 0; i < m_deploy; i++)
 	{
-		m_friendlySlots.push_back(Entity(750, rand() % 550, m_friendlyTexture));
+		m_friendlySlots.push_back(Entity(750 + rand() % 100, rand() % 550, m_friendlyTexture));
 	}
 
 }
