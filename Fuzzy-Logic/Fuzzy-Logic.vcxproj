@@ -147,6 +147,7 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Entity.h" />
     <ClInclude Include="Fuzzy.h" />
     <ClInclude Include="Game.h" />
   </ItemGroup>
