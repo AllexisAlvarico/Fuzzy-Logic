@@ -107,11 +107,17 @@ void Game::setupGame()
 
 	double m_close = m_fuzzyLogic.FuzzyTriangle(m_range, -30.0, 0.0, 30.0);
 	double m_medium = m_fuzzyLogic.FuzzyTrapezoid(m_range, 10.0, 30.0, 50.0, 70.0);
-	double m_far = m_fuzzyLogic.FuzzyGrade(m_range, 50.0, 70.0);
+	double m_far = m_fuzzyLogic.FuzzyGrade(m_range, 50.0, 120.0);
 
-	double m_lowThreat = m_fuzzyLogic.FuzzyOR(m_fuzzyLogic.FuzzyAND(m_medium, m_tinyForce), m_fuzzyLogic.FuzzyAND(m_medium, m_smallForce));
-	double m_mediumThreat = m_fuzzyLogic.FuzzyAND(m_close, m_tinyForce);
-	double m_highThreat = m_fuzzyLogic.FuzzyAND(m_close, m_fuzzyLogic.FuzzyNOT(m_medium));
+
+	//( Medium AND Tiny ) OR ( Medium AND Small ) OR ( Far AND NOT(Large) )
+	double m_lowThreat = m_fuzzyLogic.FuzzyOR(m_fuzzyLogic.FuzzyAND(m_medium, m_tinyForce), m_fuzzyLogic.FuzzyOR(
+		m_fuzzyLogic.FuzzyAND(m_medium, m_smallForce),  m_fuzzyLogic.FuzzyAND(m_far,m_fuzzyLogic.FuzzyNOT(m_largeForce))));
+	//(Close AND Tiny) OR(Medium AND Moderate) OR(Far AND Large)
+	double m_mediumThreat = m_fuzzyLogic.FuzzyOR(m_fuzzyLogic.FuzzyAND(m_close, m_tinyForce), m_fuzzyLogic.FuzzyOR(
+		m_fuzzyLogic.FuzzyAND(m_medium, m_mediumForce), m_fuzzyLogic.FuzzyAND(m_far,m_largeForce)));
+	//(Close AND NOT(Medium)) OR(Medium AND Large)
+	double m_highThreat = m_fuzzyLogic.FuzzyOR(m_fuzzyLogic.FuzzyAND(m_close, m_fuzzyLogic.FuzzyNOT(m_mediumForce)), m_fuzzyLogic.FuzzyAND(m_medium,m_largeForce));
 
 	m_deploy = (m_lowThreat * 10.0 + m_mediumThreat * 30.0 + m_highThreat * 50.0) / (m_lowThreat + m_mediumThreat + m_highThreat);
 
