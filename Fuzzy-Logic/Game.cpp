@@ -95,10 +95,13 @@ void Game::render()
 
 void Game::setupGame()
 {
-	std::cout << "Hostiles: ";
-	std::cin >> m_troops;
-	std::cout << "Range: ";
-	std::cin >> m_range;
+
+	m_troops = static_cast<double>(rand() % 30) + 1.0;
+	m_range = static_cast<double>(rand() % 70) + 1.0;
+
+	std::cout << "Hostiles: " << m_troops << std::endl;
+	std::cout << "Range: " << m_range << std::endl;
+
 
 	double m_tinyForce = m_fuzzyLogic.FuzzyTriangle(m_troops, -10.0, 0.0, 10.0);
 	double m_smallForce = m_fuzzyLogic.FuzzyTrapezoid(m_troops, 2.5, 10.0, 15.0, 20.0);
