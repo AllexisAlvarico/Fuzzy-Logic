@@ -119,8 +119,8 @@ void Game::setupGame()
 	//(Close AND Tiny) OR(Medium AND Moderate) OR(Far AND Large)
 	double m_mediumThreat = m_fuzzyLogic.FuzzyOR(m_fuzzyLogic.FuzzyAND(m_close, m_tinyForce), m_fuzzyLogic.FuzzyOR(
 		m_fuzzyLogic.FuzzyAND(m_medium, m_mediumForce), m_fuzzyLogic.FuzzyAND(m_far,m_largeForce)));
-	//(Close AND NOT(Medium)) OR(Medium AND Large)
-	double m_highThreat = m_fuzzyLogic.FuzzyOR(m_fuzzyLogic.FuzzyAND(m_close, m_fuzzyLogic.FuzzyNOT(m_mediumForce)), m_fuzzyLogic.FuzzyAND(m_medium,m_largeForce));
+	//(Close AND NOT(tiny)) OR(Medium AND Large)
+	double m_highThreat = m_fuzzyLogic.FuzzyOR(m_fuzzyLogic.FuzzyAND(m_close, m_fuzzyLogic.FuzzyNOT(m_tinyForce)), m_fuzzyLogic.FuzzyAND(m_medium,m_largeForce));
 
 	m_deploy = (m_lowThreat * 10.0 + m_mediumThreat * 30.0 + m_highThreat * 50.0) / (m_lowThreat + m_mediumThreat + m_highThreat);
 
